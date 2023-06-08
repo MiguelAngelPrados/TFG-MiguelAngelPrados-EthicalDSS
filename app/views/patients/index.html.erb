@@ -1,0 +1,31 @@
+<% title "Patients" %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Patient ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Age</th>
+      <th scope="col">Gender</th>
+      <th scope="col">Reason of admission</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @patients.each do |patient| %>
+        <tr>
+        <th scope="row"><%= patient.id %></th>
+        <td><%= patient.name %></td>
+        <td><%= patient.age %></td>
+        <td><%= patient.gender %></td>
+        <td><%= patient.admission_reason %></td>
+        <% if current_user %>
+          <td><%= link_to "See details", patient, class: "btn btn-info" %></td>
+        <% end %>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if current_user && current_user.admin %>
+  <p> <%= link_to "New patient", new_patient_path, class: "btn btn-primary" %> </p>
+<% end %>

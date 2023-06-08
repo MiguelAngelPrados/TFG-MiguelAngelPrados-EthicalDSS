@@ -1,0 +1,15 @@
+<% title "Patient details" %>
+
+<div id="<%= dom_id(@patient) %>" class="patient">
+    <p><strong>Name:</strong> <%= @patient.name %></p>
+    <p><strong>Age:</strong> <%= @patient.age %></p>
+    <p><strong>Gender:</strong> <%= @patient.gender %></p>
+    <p><strong>Reason of admission:</strong> <%= @patient.admission_reason %></p>
+</div>
+
+<%= link_to "See all patients", patients_path, class: "btn btn-secondary" %> / <%= link_to "Diagnoses", patient_diagnoses_path(@patient), class: "btn btn-info" %>
+
+<% if current_user.admin %>
+    / <%= link_to "Edit patient", edit_patient_path(@patient), class: "btn btn-warning" %>
+    / <%= link_to "Delete patient", @patient, class: "btn btn-danger", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %>
+<% end %>

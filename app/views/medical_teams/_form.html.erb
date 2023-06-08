@@ -1,0 +1,5 @@
+<%= bootstrap_form_with(model: @medical_team) do |f| %>
+    <%= f.alert_message "Please fix the errors below.", error_summary: false %>
+    <%= f.text_field :specialization %>
+    <%= f.primary @medical_team.persisted? ? "Update medical team" : "Create medical team" %> 
+<% end %>

@@ -1,0 +1,86 @@
+<% title "Solution recommended for #{@patient.name}" %>
+
+<br>
+
+<p> <h2> Intervention with ID <%= @solution.id %> : <u> <%= @solution.procedure %> </u> </h2> </p>
+
+<br>
+
+<p> <h3> Medical team who proposed the intervention : <%= @solution.medical_team.specialization %> </p> </h3>
+
+<br>
+
+<p> <h3> Profile used: </p> </h3>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+        <th scope="col">Patient competence</th>
+        <th scope="col">Family competence</th>
+        <th scope="col">Medical Team</th>
+        <th scope="col">Diagnosis</th>
+        <th scope="col">Intervention</th>
+        <th scope="col">Beneficence</th>
+        <th scope="col">Non-Maleficence</th>
+        <th scope="col">Autonomy</th>
+        <th scope="col">Justice</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        <% @profile.each do |value| %>
+            <td> <%= value.round(3) %> </td>
+        <% end %>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<p> <h3> Result matrix: </p> </h3>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+        <th scope="col">Intervention ID</th>
+        <th scope="col">Patient judgement</th>
+        <th scope="col">Family criteria</th>
+        <th scope="col">Medical team quality</th>
+        <th scope="col">Diagnosis reliability</th>
+        <th scope="col">Intervention success rate</th>
+        <th scope="col">Beneficence</th>
+        <th scope="col">Non-Maleficence</th>
+        <th scope="col">Autonomy</th>
+        <th scope="col">Justice</th>
+        <th scope="col">Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% i = 0 %>
+        <% @patient.interventions.each do |intervention| %>
+            <tr>
+            <th scope="row"><%= intervention.id %></th>
+            <% instance_variable_get("@intervention_values_#{intervention.id}").zip(@profile).map { |a, b| a * b }.each do |value| %>
+                <td> <%= value.round(3) %> </td>
+            <% end %>
+            <td> <%= @scores[i].round(3) %> </td>
+            <% i = i+1 %>
+            </tr>
+        <% end %>
+
+    </tbody>
+</table>
+
+<br>
+
+<p> <h3> Final scores: </p> </h3>
+
+<% i = 0 %>
+
+<% @patient.interventions.each do |intervention| %>
+
+    <p> <h5> Recommendation of intervention with ID <%= intervention.id %> : <%= ( (@scores[i]*100) / @scores.sum ).round(2) %> % </h5> </p>
+
+    <% i = i + 1 %>
+
+<% end %>

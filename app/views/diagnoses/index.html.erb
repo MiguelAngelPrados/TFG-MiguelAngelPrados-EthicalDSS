@@ -1,0 +1,25 @@
+<% title "Diagnoses of " + @patient.name %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Diagnosis ID</th>
+      <th scope="col">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @patient.diagnoses.each do |diagnosis| %>
+        <tr>
+        <th scope="row"><%= diagnosis.id %></th>
+        <td><%= diagnosis.description %></td>
+        <% if current_user.admin %>
+          <td><%= link_to "Delete diagnosis", "/patients/#{@patient.id}/diagnoses/#{diagnosis.id}", class: "btn btn-danger", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></td>
+        <% end %>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if current_user.admin %>
+    <%= link_to "Add a new diagnosis", new_patient_diagnosis_path(@patient), class: "btn btn-primary" %>
+<% end %>

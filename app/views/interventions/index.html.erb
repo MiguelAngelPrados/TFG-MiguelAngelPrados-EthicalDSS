@@ -1,0 +1,31 @@
+<% title "Interventions" %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Patient</th>
+      <th scope="col">Medical Team</th>
+      <th scope="col">Procedure</th>
+      <th scope="col">Patient judgement</th>
+      <th scope="col">Family criteria</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @interventions.each do |intervention| %>
+        <tr>
+        <th scope="row"><%= intervention.patient.name %></th>
+        <td><%= intervention.medical_team.specialization %></td>
+        <td><%= intervention.procedure %></td>
+        <td><%= intervention.patient_judgement ? "Agree" : "Not agree" %></td>
+        <td><%= intervention.family_criteria ? "Agree" : "Not agree" %></td>
+        <% if current_user.admin %>
+          <td><%= link_to "Edit intervention", edit_intervention_path(intervention), class: 'btn btn-warning' %></td>
+          <td><%= link_to "Delete intervention", "/interventions/#{intervention.id}", class: 'btn btn-danger', data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %></td>
+        <% end %>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if current_user.admin %>
+  <p> <%= link_to "New intervention", new_intervention_path, class: "btn btn-primary" %> </p>
+<% end %>

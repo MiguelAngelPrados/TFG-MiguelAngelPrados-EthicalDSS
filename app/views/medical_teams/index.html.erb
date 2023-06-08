@@ -1,0 +1,26 @@
+<% title "Medical Teams" %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Medical Team ID</th>
+      <th scope="col">Specialization</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @medical_teams.each do |medical_team| %>
+        <tr>
+        <th scope="row"><%= medical_team.id %></th>
+        <td><%= medical_team.specialization %></td>
+        <% if current_user.admin %>
+          <td><%= link_to "Edit medical team", "/medical_teams/#{medical_team.id}/edit", class: "btn btn-warning" %></td>
+          <td> <%= link_to "Delete medical team", "/medical_teams/#{medical_team.id}", class: "btn btn-danger", data: {turbo_method: :delete, turbo_confirm: "Are you sure?"} %> </td>
+        <% end %>
+        </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% if current_user.admin %>
+    <%= link_to "Add a new medical team", new_medical_team_path, class: "btn btn-primary" %>
+<% end %>

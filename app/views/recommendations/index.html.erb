@@ -1,0 +1,23 @@
+<% title "Patients with conflicts" %>
+<p></p>
+<% @patients.each do |patient| %>
+
+    <% if patient.interventions.count >= 2 %>
+
+        <div id="<%= dom_id(patient) %>" class="patient">
+            <p><strong>Name:</strong> <%= patient.name %></p>
+            <% i = 1 %>
+            <% patient.diagnoses.each do |diagnosis| %>
+                <p><strong>Diagnosis <%=i%>:</strong> <%= diagnosis.description %> <% i=i+1 %> </p>
+            <% end %>
+            <% i = 1 %>
+            <% patient.interventions.each do |intervention| %>
+                <p><strong>Intervention <%=i%>:</strong> <%= intervention.procedure %> <% i=i+1 %> </p>
+            <% end %>
+            <%= link_to "Get a recommendation", "recommendations/#{patient.id}", class: "btn btn-primary" %>
+        </div>
+
+        <br><br><br>
+
+    <% end %>
+<% end %>

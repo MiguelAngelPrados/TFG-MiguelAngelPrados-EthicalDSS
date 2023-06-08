@@ -1,0 +1,15 @@
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+<% title "New Diagnosis" %>
+
+<%= bootstrap_form_with(model: [@patient, @diagnosis]) do |f| %>
+    <%= f.alert_message "Please fix the errors below.", error_summary: false %>
+    <p><%= f.select :description, Diagnosis.pluck(:description), { wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "select2 selectpicker", data: { live_search: true } } %></p>
+    <%= f.primary "Add diagnosis" %>
+<% end %>
+
+<script>
+    $('.select2').select2();
+</script>

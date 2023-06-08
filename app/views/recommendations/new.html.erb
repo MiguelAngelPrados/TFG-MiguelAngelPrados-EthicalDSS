@@ -1,0 +1,162 @@
+<% title "Recommendation for " + @patient.name %>
+
+<%= bootstrap_form_with(url: "#{@patient.id}/result", method: :get) do |f| %>
+
+    <table class="table table-striped">
+    <thead>
+        <tr>
+        <th scope="col">Patient competence</th>
+        <th scope="col">Family competence</th>
+        <th scope="col">Medical Team</th>
+        <th scope="col">Diagnosis</th>
+        <th scope="col">Intervention</th>
+        <th scope="col">Beneficence</th>
+        <th scope="col">Non-Maleficence</th>
+        <th scope="col">Autonomy</th>
+        <th scope="col">Justice</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+        <td><%= f.select :patient_competence, (0 .. 10).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+        <td><%= f.select :family_competence, (0 .. 10).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+        <td><%= f.select :medical_team, (0 .. 10).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+        <td><%= f.select :diagnosis, (0 .. 10).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+        <td><%= f.select :intervention, (0 .. 10).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+        <td><%= f.select :beneficence, (0 .. 10).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+        <td><%= f.select :non_maleficence, (0 .. 10).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+        <td><%= f.select :autonomy, (0 .. 10).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+        <td><%= f.select :justice, (0 .. 10).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+        </tr>
+    </tbody>
+    </table>
+
+    <p> <%= f.button 'Random values', type: 'button', id: 'random_global', class: 'btn btn-secondary' %> </p>
+
+    <table class="table table-striped">
+    <thead>
+        <tr>
+        <th scope="col">Intervention ID</th>
+        <th scope="col">Patient judgement</th>
+        <th scope="col">Family criteria</th>
+        <th scope="col">Medical team quality</th>
+        <th scope="col">Diagnostic reliability</th>
+        <th scope="col">Intervention success rate</th>
+        <th scope="col">Beneficence</th>
+        <th scope="col">Non-Maleficence</th>
+        <th scope="col">Autonomy</th>
+        <th scope="col">Justice</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% @patient.interventions.each do |intervention| %>
+            <% @intervention_ids << intervention.id %>
+            <tr>
+            <td><%= intervention.id %></td>
+            <td><%= f.select :"patient_judgement_#{intervention.id}", (0 .. 100).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+            <td><%= f.select :"family_criteria_#{intervention.id}", (0 .. 100).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+            <td><%= f.select :"medical_team_quality_#{intervention.id}", (0 .. 100).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+            <td><%= f.select :"diagnostic_reliability_#{intervention.id}", (0 .. 100).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+            <td><%= f.select :"intervention_success_rate_#{intervention.id}", (0 .. 100).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+            <td><%= f.select :"beneficence_#{intervention.id}", (0 .. 100).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+            <td><%= f.select :"non_maleficence_#{intervention.id}", (0 .. 100).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+            <td><%= f.select :"autonomy_#{intervention.id}", (0 .. 100).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+            <td><%= f.select :"justice_#{intervention.id}", (0 .. 100).to_a, { hide_label: true, wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></td>
+            </tr>
+        <% end %>
+    </tbody>
+    </table>
+
+    <p> <%= f.button 'Random values', type: 'button', id: 'random_values', class: 'btn btn-secondary' %> </p>
+
+    <%= f.primary "Calculate solution" %>
+    
+<% end %>
+
+<script>
+  document.getElementById('random_global').addEventListener('click', function() {
+    var selectBox = document.getElementById('patient_competence');
+    var optionsCount = selectBox.options.length;
+    var randomIndex = Math.floor(Math.random() * optionsCount);
+    selectBox.selectedIndex = randomIndex;
+
+    selectBox = document.getElementById('family_competence');
+    randomIndex = Math.floor(Math.random() * optionsCount);
+    selectBox.selectedIndex = randomIndex;
+
+    selectBox = document.getElementById('medical_team');
+    randomIndex = Math.floor(Math.random() * optionsCount);
+    selectBox.selectedIndex = randomIndex;
+
+    selectBox = document.getElementById('diagnosis');
+    randomIndex = Math.floor(Math.random() * optionsCount);
+    selectBox.selectedIndex = randomIndex;
+
+    selectBox = document.getElementById('intervention');
+    randomIndex = Math.floor(Math.random() * optionsCount);
+    selectBox.selectedIndex = randomIndex;
+
+    selectBox = document.getElementById('beneficence');
+    randomIndex = Math.floor(Math.random() * optionsCount);
+    selectBox.selectedIndex = randomIndex;
+
+    selectBox = document.getElementById('non_maleficence');
+    randomIndex = Math.floor(Math.random() * optionsCount);
+    selectBox.selectedIndex = randomIndex;
+
+    selectBox = document.getElementById('autonomy');
+    randomIndex = Math.floor(Math.random() * optionsCount);
+    selectBox.selectedIndex = randomIndex;
+
+    selectBox = document.getElementById('justice');
+    randomIndex = Math.floor(Math.random() * optionsCount);
+    selectBox.selectedIndex = randomIndex;
+  });
+</script>
+
+<script>
+    var ids = <%= @intervention_ids.to_json.html_safe %>;
+    document.getElementById('random_values').addEventListener('click', function() {
+
+        ids.forEach(function(intervention_id, index){
+            var selectBox = document.getElementById('patient_judgement_' + intervention_id);
+            var optionsCount = selectBox.options.length;
+            var randomIndex = Math.floor(Math.random() * optionsCount);
+            selectBox.selectedIndex = randomIndex;
+
+            selectBox = document.getElementById('family_criteria_' + intervention_id);
+            randomIndex = Math.floor(Math.random() * optionsCount);
+            selectBox.selectedIndex = randomIndex;
+
+            selectBox = document.getElementById('medical_team_quality_' + intervention_id);
+            randomIndex = Math.floor(Math.random() * optionsCount);
+            selectBox.selectedIndex = randomIndex;
+
+            selectBox = document.getElementById('diagnostic_reliability_' + intervention_id);
+            randomIndex = Math.floor(Math.random() * optionsCount);
+            selectBox.selectedIndex = randomIndex;
+
+            selectBox = document.getElementById('intervention_success_rate_' + intervention_id);
+            randomIndex = Math.floor(Math.random() * optionsCount);
+            selectBox.selectedIndex = randomIndex;
+
+            selectBox = document.getElementById('beneficence_' + intervention_id);
+            randomIndex = Math.floor(Math.random() * optionsCount);
+            selectBox.selectedIndex = randomIndex;
+
+            selectBox = document.getElementById('non_maleficence_' + intervention_id);
+            randomIndex = Math.floor(Math.random() * optionsCount);
+            selectBox.selectedIndex = randomIndex;
+
+            selectBox = document.getElementById('autonomy_' + intervention_id);
+            randomIndex = Math.floor(Math.random() * optionsCount);
+            selectBox.selectedIndex = randomIndex;
+
+            selectBox = document.getElementById('justice_' + intervention_id);
+            randomIndex = Math.floor(Math.random() * optionsCount);
+            selectBox.selectedIndex = randomIndex;
+
+        });
+
+    });
+</script>

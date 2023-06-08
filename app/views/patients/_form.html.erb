@@ -1,0 +1,8 @@
+<%= bootstrap_form_with(model: @patient) do |f| %>
+    <%= f.alert_message "Please fix the errors below.", error_summary: false %>
+    <%= f.text_field :name %>
+    <%= f.number_field :age %>
+    <%= f.select :gender, ["Male", "Female", "Other"], { wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %>
+    <p><%= f.text_field :admission_reason %></p>
+    <%= f.primary @patient.persisted? ? "Update patient" : "Create patient" %> 
+<% end %>

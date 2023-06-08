@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  patient: one
+  medical_team: one
+  procedure: MyText
+  patient_judgement: false
+  family_criteria: false
+
+two:
+  patient: two
+  medical_team: two
+  procedure: MyText
+  patient_judgement: false
+  family_criteria: false

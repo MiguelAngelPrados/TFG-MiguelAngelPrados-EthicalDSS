@@ -1,0 +1,18 @@
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
+<%= bootstrap_form_with(model: @intervention) do |f| %>
+    <%= f.alert_message "Please fix the errors below.", error_summary: true %>
+    <p><%= f.select :name, Patient.pluck(:name), { label: "Patient name", wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></p>
+    <p><%= f.select :medical_team, MedicalTeam.pluck(:specialization), { wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "selectpicker" } %></p>
+    <% MimicRecord.table_name = "d_icd_procedures" %>
+    <p><%= f.select :procedure, MimicRecord.pluck(:LONG_TITLE), { wrapper: { class: 'has-warning', data: { foo: 'bar' } } }, { class: "select2 selectpicker", data: { live_search: true } } %></p>
+    <p><%= f.check_box :patient_judgement, label: "The patient agrees the intervention" %></p>
+    <p><%= f.check_box :family_criteria, label: "The family agrees the intervention" %></p>
+    <%= f.primary @intervention.persisted? ? "Update intervention" : "Create intervention" %> 
+<% end %>
+
+<script>
+    $('.select2').select2();
+</script>
